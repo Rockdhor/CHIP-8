@@ -59,6 +59,9 @@ class CHIP8Emulator {
         this.soundTimer = 0
         this.registers = new Uint8Array(16)
         this.audioCtx = new AudioContext();
+        this.gainNode = this.audioCtx.createGain();
+        this.gainNode.connect(this.audioCtx.destination);
+        this.gainNode.gain.value = 0.25;
         this.beepOscillator = null;
         this.clearDisplay()
         this.stop()
@@ -373,10 +376,8 @@ class CHIP8Emulator {
 
     updateSoundTimer() {
         if (this.soundTimer > 0) {
+            this.playSound();
             this.soundTimer--;
-            if (this.soundTimer === 0) {
-                this.playSound();
-            }
         } else {
             this.stopSound(); 
         }
@@ -385,17 +386,18 @@ class CHIP8Emulator {
     playSound() {
         if (!this.beepOscillator) {
             this.beepOscillator = this.audioCtx.createOscillator();
-            this.beepOscillator.type = "triangle";
+            this.beepOscillator.type = "square";
             this.beepOscillator.frequency.value = 440; 
-            this.beepOscillator.connect(this.audioCtx.destination);
-            
+            this.beepOscillator.connect(this.gainNode);
+            this.beepOscillator.start(0);
         }
-        this.beepOscillator.start();
+        
     }
 
     stopSound() {
         if (this.beepOscillator) {
-            this.beepOscillator.stop();
+            this.beepOscillator.stop(0);
+            this.beepOscillator.disconnect(0);
             this.beepOscillator = null;
         }
     }
