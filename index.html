@@ -12,7 +12,7 @@
     <title>CHIP-8 Interpreter</title>
 </head>
 <body>
-    <div class="container-fluid text-center">
+    <div class="container-fluid text-center d-flex flex-column justify-content-between">
         <div class="row ">
             <h1>CHIP-8 Interpreter</h1>
         </div>
@@ -24,23 +24,24 @@
             <div class="col-md-6 justify-content-center">
                 
                 <div class="row">
-                    <div class="col">
-                        <label for="romPicker">ROM: </label>
-                        <select name="romPicker" id="romPicker">
-                            <option value="IBM Logo">IBM Logo</option>
-                        </select>
-                    </div>
+                    
+                        <div class="input-group px-0">
+                            <span class="input-group-text rounded-0">ROM:</span>
+                            <select class="form-select rounded-0" name="romPicker" id="romPicker">
+                                <option value="Custom">Upload</option>
+                                <option value="IBM Logo.ch8">IBM Logo</option>
+                                <option value="pong.ch8">Pong</option>
+                                <option value="space_invaders.ch8">Space Invaders</option>
+                            </select>
+                            <input class="form-control rounded-0 filePicker" type="file" id="fileInput" accept=".ch8">
+                            <button class="btn btn-success rounded-0 filePicker" id="fileLoadButton">Load ROM</button>
+                        </div>
+                    
                 </div>
                 <div class="row">
                     <canvas id="display" width="768" height="384" style="border: 1px black solid;">
 
                     </canvas>
-                </div>
-                <div class="row">
-                    
-                </div>
-                <div>
-                    <input type="file" id="fileInput" accept=".ch8">  <button id="fileLoadButton">Load ROM</button>
                 </div>
             </div>
             <div class="col-md-3">
@@ -116,6 +117,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <h3>Important links and stuff</h3>
         </div>
     </div>
     

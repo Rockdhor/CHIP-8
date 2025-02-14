@@ -403,6 +403,32 @@ class CHIP8Emulator {
     }
 }
 
+document.getElementById("romPicker").onchange = async (e) => {
+    console.log(e.target.value)
+    if (e.target.value == "Custom") {
+        document.querySelectorAll(".filePicker").forEach((e) => {
+            e.style.display = "inline"
+            emulator = new CHIP8Emulator();
+            emulator.reset()
+            emulator.updateDisplay()
+        })
+        return
+    }
+    document.querySelectorAll(".filePicker").forEach((e) => {
+        e.style.display = "none"
+    })
+    let response = await fetch(e.target.value)
+    console.log(response)
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const rom = await response.arrayBuffer();
+    emulator = new CHIP8Emulator();
+    emulator.loadRom(rom);
+    emulator.run();
+    
+}
+
 document.getElementById("fileLoadButton").onclick = () => {
     let filePicker = document.getElementById("fileInput")
     let file = filePicker.files[0]
