@@ -102,7 +102,7 @@ class CHIP8Emulator {
         this.isRunning = true;
             const emulateFrame = () => {
                 if (!this.isRunning) return
-                for (let i = 0; i < 20; i++) {
+                for (let i = 0; i < 5; i++) {
                     this.emulateCycle()
                 }
 
@@ -362,7 +362,7 @@ class CHIP8Emulator {
 
     updateDisplay() {
         const ctx = document.getElementById("display").getContext("2d")
-        const pixelSize = 11
+        const pixelSize = 12
         for (let y = 0; y < 32; y++) {
             for (let x = 0; x < 64; x++) {          
                 ctx.fillStyle = this.display[y][x] ? "black" : "white";
@@ -388,8 +388,9 @@ class CHIP8Emulator {
             this.beepOscillator.type = "triangle";
             this.beepOscillator.frequency.value = 440; 
             this.beepOscillator.connect(this.audioCtx.destination);
-            this.beepOscillator.start();
+            
         }
+        this.beepOscillator.start();
     }
 
     stopSound() {
